@@ -1,28 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Editor
+      ref="editor"
+      @completeEditor='EndEdit'
+    />
+    <button @click="submit">提交</button>
   </div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Editor from './components/Editor.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Editor
+  },
+  data () {
+    return {
+      html: ''
+    }
+  },
+  methods: {
+    EndEdit (val) {
+      this.html = val
+    },
+    submit () {
+      // 手动触发子组件的失去焦点事件
+      this.$refs.editor.completeEdit()
+      alert(this.html)
+    }
+  },
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
